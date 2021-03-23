@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Defikarte.ch",
-    "slug": "Defikarte-ch",
-    "owner": "defikarte",
-    "version": "1.0.11",
+    "name": "Neophyten.ch",
+    "slug": "Neophyten-ch",
+    "owner": "stadt-buelach",
+    "version": "0.1.0",
     "orientation": "portrait",
     "primaryColor": "#ffffff",
     "icon": "./assets/icon.png",
@@ -20,15 +20,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ch.defikarte.app",
-      "buildNumber": "1.0.11",
+      "bundleIdentifier": "ch.neophyten.app",
+      "buildNumber": "0.1.0",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Diese App benötigt die Standortdaten deines Gerätes um den nächsten Defi anzeigen zu können."
+        "NSLocationWhenInUseUsageDescription": "Diese App benötigt die Standortdaten deines Gerätes um Neophyten zu erfassen."
       }
     },
     "android": {
-      "package": "ch.defikarte.app",
-      "versionCode": 11,
+      "package": "ch.neophyten.app",
+      "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"

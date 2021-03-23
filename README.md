@@ -1,29 +1,12 @@
-![Deploy iOS and Android App (JS only)](https://github.com/chnuessli/defikarte.ch-app/workflows/Deploy%20iOS%20and%20Android%20App%20(JS%20only)/badge.svg?branch=main)
-![Defikarte-Backend](https://github.com/chnuessli/defikarte.ch-app/workflows/Defikarte-Backend/badge.svg?branch=main)
-
-# Defikarte.ch - die App
-
-![Picture](app/defikarte/assets/icons/appstore.png)
-
-This Page is also available in English, please visit: [English 👈🏻](README_en.md)
+# Neophyten beseitigen
 
 ## Zweck der App
 
-Diese App sollte helfen, den nächsten Defibrillator in der näheren Umgebung zu finden. Dies um möglichst rasch, einer Person in Not oder einer Reanimation helfen zu können.Die Daten sind komplett Open Source und kommen von OpenStreetMap. Mit Hilfe der App sollte jede Person zum nächst besten Defi navigiert werden über die Navigations-App des jeweiligen Handys.
-
-Die Daten basieren alle auf OpenStreetMap, also kann jeder mithelfen die App zu verbessern. Dies geht direkt in der App. Ein Defibrillator kann via App gemeldet werden und steht dann wieder allen zu Verfügung.
-
-Die App ist ein Projekt von [Defikarte.ch](https://www.defikarte.ch) und soll helfen, Defibrillatoren in der ganzen Schweiz zu erfassen und zu visualisieren.
-
-**Die Karte ist bei weitem noch nicht vollständig, die App und die Karte sollen helfen, diesen Datenbestand zu verbessern.**
+In dieser App können berechtigte Personen und Organisationen (Forstwart, Gemeinden etc.) Standorte von Neophyten erfassen. Die Neophyten können dann von dritt Personen und Organisationen beseitigt werden. Zudem können die Daten in ein gängiges Format (z.B. csv) exportiert werden, um im GIS weiter bearbeitet zu werden.
 
 ### App-Stores
 
-Die App zu Defikarte.ch findet man in den Stores des jeweiligen Anbieters.
-
-[![appstore.png](images/appstore.png)](https://apps.apple.com/us/app/defikarte-ch/id1549569525)
-
-[![playstore.png](images/playstore.png)](https://play.google.com/store/apps/details?id=ch.defikarte.app)
+Die App befindet sich noch in Entwicklung und ist noch nicht in den Appstores verfügbar.
 
 ## Entwicklung
 
@@ -54,24 +37,3 @@ Starten der Entwicklungsumgebung (Backend / Azure Functions)
 * local.settings.json hinzufügen (wird für Storage emulation benötigt)
 * Projekt starten
 * Mit Postman http-requests ausführen (siehe Console für locale Ports)
-
-## Mitmachen
-
-Wir sind immer auf der Suche nach motivierten, offenen Mitwirkenden die unser Projekt unterstützen wollen. Löse ein Issue, erfasse ein Issue usw.
-
-### Mitwirkende
-
-<a href="https://github.com/chnuessli/defikarte.ch-app/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=chnuessli/defikarte.ch-app" />
-</a>
-
-## Sponsoren
-
-Bitte lese [SPONSORING.md](SPONSORING.md)
-
-* [Procamed AG](https://www.procamed.ch)
-* [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
-* [Hexagon](http://www.hexagonsi.com)
-* [Github-User Malsendif](https://github.com/Malsendif)
-
-[Sponsore uns](https://github.com/sponsors/chnuessli)
