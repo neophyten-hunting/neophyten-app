@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace DefikarteBackend.Validation
+namespace Backend.Validation
 {
     public static class ValidationExtensions
     {

@@ -4,7 +4,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace DefikarteBackend.Validation
+namespace Backend.Validation
 {
     public static class HttpRequestExtensions
     {

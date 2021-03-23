@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: FunctionsStartup(typeof(DefikarteBackend.Startup))]
-namespace DefikarteBackend
+[assembly: FunctionsStartup(typeof(Backend.Startup))]
+namespace Backend
 {
     public class Startup : FunctionsStartup
     {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Results;
 using System.Collections.Generic;
 
-namespace DefikarteBackend.Validation
+namespace Backend.Validation
 {
     public class ValidatableRequest<T>
     {
