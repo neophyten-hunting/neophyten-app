@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { AntDesign } from '@expo/vector-icons';
 import MapInfoPanel from './MapInfoPanel';
 
-const CreateMapOverlay = ({ setIsCreateMode, newDefiCoords, navigation, isTopView }) => {
+const CreateMapOverlay = ({ setIsCreateMode, newItemCoords, navigation, isTopView }) => {
   return (
     <>
       <MapInfoPanel
@@ -15,7 +15,7 @@ const CreateMapOverlay = ({ setIsCreateMode, newDefiCoords, navigation, isTopVie
         <TouchableOpacity
           style={styles.iconStyle}
           onPress={() => {
-            navigation.navigate('Create', { latlon: newDefiCoords });
+            navigation.navigate('Create', { latlon: newItemCoords });
             setIsCreateMode(false);
           }} >
           <AntDesign name="checkcircleo" size={48} color="white" />
