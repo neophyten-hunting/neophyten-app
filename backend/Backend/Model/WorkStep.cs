@@ -6,7 +6,7 @@ namespace Backend.Model
 {
     public class WorkStep
     {
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))] 
         public WorkState State { get; set; }
