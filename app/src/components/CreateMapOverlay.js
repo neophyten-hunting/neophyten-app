@@ -9,7 +9,7 @@ const CreateMapOverlay = ({ setIsCreateMode, newDefiCoords, navigation, isTopVie
     <>
       <MapInfoPanel
         isTopView={isTopView}
-        text='Ziehe den Marker an den Standort des neuen Defibrillators'
+        text='Ziehe den Marker an den gewünschten Standort'
         subText='(Marker halten und verschieben)' />
       <View style={styles.createIconsContainerStyle}>
         <TouchableOpacity

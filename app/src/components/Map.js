@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Marker, UrlTile } from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
-import currentDefisOnMap from '../helpers/markersOnMap.js'
-import DefiMarker from './DefiMarker';
-import SimpleMarker from './SimpleMarker';
 import CreateMapOverlay from './CreateMapOverlay';
 import MapInfoPanel from './MapInfoPanel';
 import DetailMapOverlay from './DetailMapOverlay';
@@ -12,13 +9,12 @@ import LocationButton from './LocationButton.js';
 import MapLayerButton from './MapLayersButton.js';
 import OsmContributerOverlay from './OsmContributerOverlay.js';
 
-const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCreateMode, setIsCreateMode }) => {
+const Map = ({ initCoords, mapRef, items, itemsLoading, isCreateMode, setIsCreateMode }) => {
   const [region, setRegion] = useState(initCoords);
-  const [newDefiCoords, setNewDefiCoords] = useState(initCoords);
-  const [defisOnMap, setDefisOnMap] = useState([]);
-  const [selectedDefibrillator, setSelectedDefibrillator] = useState(null);
+  const [newItemCoords, setNewItemCoords] = useState(initCoords);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [mode, setMode] = useState('');
-  const [isTileOverlayActive, setIsTileOverlayActive] = useState(false);
+  const [isTileOverlayActive, setIsTileOverlayActive] = useState(true);
 
   const animateToRegion = ({ latitude, longitude }) => {
     mapRef.current.animateToRegion({
@@ -31,31 +27,17 @@ const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCrea
 
   useEffect(() => {
     if (isCreateMode) {
-      setNewDefiCoords({ latitude: region.latitude, longitude: region.longitude });
+      setNewItemCoords({ latitude: region.latitude, longitude: region.longitude });
     }
   }, [isCreateMode]);
 
   useEffect(() => {
-    // debounce defis on map claculation for performance optimization
-    const timerId = setTimeout(() => {
-      setDefisOnMap(currentDefisOnMap(defibrillators, region));
-    }, 500);
-
-    return () => {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-    }
-  }, [region, defibrillators])
-
-  useEffect(() => {
-    const firstload = defibrillators.length === 0 && defibrillatorsLoading;
-    const info = defisOnMap.length > 1000 && !isCreateMode;
-    const top = firstload ? 'load' : info ? 'info' : isCreateMode ? 'create' : 'loc';
+    const firstload = items.length === 0 && itemsLoading;
+    const top = firstload ? 'load' : isCreateMode ? 'create' : 'loc';
     setMode(top);
-  }, [defisOnMap.length, defibrillators.length, defibrillatorsLoading, isCreateMode])
+  }, [itemsLoading, isCreateMode])
 
-  const renderMarkers = (createMode, defibrillators, latlon, setLatLng) => {
+  const renderMarkers = (createMode, items, latlon, setLatLng) => {
     if (createMode) {
       return (
         <Marker draggable
@@ -65,29 +47,14 @@ const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCrea
       );
     }
     else {
-      if (defibrillators.length >= 1000) {
-        return null;
-      }
-      return defibrillators.map((defibrillator) => {
-        if (selectedDefibrillator && selectedDefibrillator.id == defibrillator.id) {
-          return (
-            <DefiMarker
-              key={defibrillator.id.toString()}
-              defibrillator={defibrillator}
-              coordinate={{ latitude: defibrillator.lat, longitude: defibrillator.lon }}
-            />
-          );
-        }
-        else {
-          return (
-            <SimpleMarker
-              key={defibrillator.id.toString()}
-              defibrillator={defibrillator}
-              coordinate={{ latitude: defibrillator.lat, longitude: defibrillator.lon }}
-              onMarkerSelected={setSelectedDefibrillator}
-            />
-          );
-        }
+      return items.map((item) => {
+        return (
+          <Marker
+            pinColor="green"
+            key={item.id.toString()}
+            coordinate={{ latitude: item.lat, longitude: item.lon }}
+          />
+        );
       }
       );
     }
@@ -98,29 +65,21 @@ const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCrea
       return <CreateMapOverlay
         isTopView={true}
         setIsCreateMode={setIsCreateMode}
-        newDefiCoords={newDefiCoords} />
+        newItemCoords={newItemCoords} />
     }
-    else if (selectedDefibrillator != null) {
-      return <DetailMapOverlay defibrillator={selectedDefibrillator} />
+    else if (selectedItem != null) {
+      return <DetailMapOverlay defibrillator={selectedItem} />
     } else {
       return null;
     }
   }
 
-  const renderInfoPanel = (defibrillators, mode) => {
-    if (mode === 'info') { //defibrillators.length > 1000 && !isCreateMode
+  const renderInfoPanel = (mode) => {
+    if (mode === 'load') {
       return (
         <MapInfoPanel
           isTopView={true}
-          text='Zoome in eine bestimmte Region um Defibrillatoren anzuzeigen.'
-          subText={`(${defibrillators.length} Defis im Kartenausschnitt, Anzeige ab < 1000)`} />
-      );
-    }
-    else if (mode === 'load') { //defibrillators.length === 0 && isLoading
-      return (
-        <MapInfoPanel
-          isTopView={true}
-          text="Lade Defibrillatoren..."
+          text="Laden..."
           showLoading={true}
         />
       );
@@ -129,7 +88,7 @@ const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCrea
 
   const onMapPress = event => {
     if (event.action !== null && event.action !== 'marker-press') {
-      setSelectedDefibrillator(null);
+      setSelectedItem(null);
     }
   }
 
@@ -157,11 +116,11 @@ const Map = ({ initCoords, mapRef, defibrillators, defibrillatorsLoading, isCrea
         moveOnMarkerPress={false}
         showsCompass={false}
       >
-        {renderMarkers(isCreateMode, defisOnMap, newDefiCoords, setNewDefiCoords)}
+        {renderMarkers(isCreateMode, items, newItemCoords, setNewItemCoords)}
         {tileOverlay}
       </MapView>
       <OsmContributerOverlay show={isTileOverlayActive} />
-      {renderInfoPanel(defisOnMap, mode)}
+      {renderInfoPanel(mode)}
       {renderOverlay(mode)}
       <LocationButton isTopView={mode === 'loc'} animateToRegion={animateToRegion} />
       <MapLayerButton setLayerActive={setIsTileOverlayActive} layerIsActive={isTileOverlayActive} />

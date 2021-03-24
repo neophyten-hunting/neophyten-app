@@ -3,15 +3,15 @@ import { View, ScrollView, Text, TouchableOpacity, KeyboardAvoidingView, Activit
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
-import { Context as DefibrillatorContext } from '../context/DefibrillatorContext';
+import { Context as NeophytesContext } from '../context/NeophytesContext';
 import TextForm from '../components/TextForm';
 import SwitchForm from '../components/SwitchForm';
 import createForm from '../config/createForm';
 
 const CreateScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
-  const { state: defiState, addDefibrillator, resetError } = useContext(DefibrillatorContext);
-  const [state, setState] = useState({ latitude: 0, longitude: 0, emergencyPhone: '144' });
+  const { state: itemState, getItems, addItem, resetError } = useContext(NeophytesContext);
+  const [state, setState] = useState({ latitude: 0, longitude: 0 });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { control, handleSubmit, errors } = useForm();
 
@@ -21,7 +21,8 @@ const CreateScreen = ({ navigation }) => {
   }
 
   const add = async () => {
-    await addDefibrillator(state, () => navigation.navigate('Main'));
+    await addItem(state, () => navigation.navigate('Main'));
+    await getItems();
   }
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const CreateScreen = ({ navigation }) => {
           multiline={formComp.multiline}
           useSwitch={formComp.useSwitch}
           placeholder={formComp.placeholder}
-          disabled={defiState.creating}
+          disabled={itemState.creating}
         />
       }
       else if (formComp.type === 'Switch') {
@@ -73,7 +74,7 @@ const CreateScreen = ({ navigation }) => {
           defaultValue={formComp.defaultValue}
           key={index}
           labelText={formComp.label}
-          disabled={defiState.creating}
+          disabled={itemState.creating}
         />
       }
       else {
@@ -87,7 +88,7 @@ const CreateScreen = ({ navigation }) => {
 
   return (
     <View style={styles.containerStyle} >
-      <ActivityIndicator style={styles.loadingStyle} size="large" color="green" animating={defiState.creating} />
+      <ActivityIndicator style={styles.loadingStyle} size="large" color="green" animating={itemState.creating} />
       <View style={styles.coordStyle}>
         <MaterialIcons color='green' size={30} name='location-pin' />
         <Text style={styles.inputStyle}>{state.latitude.toFixed(4)}, {state.longitude.toFixed(4)}</Text>
@@ -102,19 +103,19 @@ const CreateScreen = ({ navigation }) => {
           enabled
         >
           {renderFormComponent()}
-          <Text style={styles.errorTextStyle}>{defiState.error}</Text>
+          <Text style={styles.errorTextStyle}>{itemState.error}</Text>
         </KeyboardAvoidingView>
       </ScrollView>
       <View style={bottomBar}>
         <TouchableOpacity
-          disabled={defiState.creating}
+          disabled={itemState.creating}
           color='white'
           title='Erstellen'
           onPress={handleSubmit(onSubmit)} >
           <Text style={styles.buttonTextStyle}>Erstellen</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={defiState.creating}
+          disabled={itemState.creating}
           color='white'
           title='Abbrechen'
           onPress={() => navigation.navigate('Main')} >

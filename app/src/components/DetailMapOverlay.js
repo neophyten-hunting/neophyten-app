@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import DefiItem from './DefiItem';
+import Item from './Item';
 
 const DetailMapOverlay = ({ defibrillator }) => {
   return (
     <View style={styles.containerStyle}>
-      <DefiItem
+      <Item
         defibrillator={defibrillator}
       />
     </View>

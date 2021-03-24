@@ -2,9 +2,9 @@ import React, { useRef, useContext, useEffect, useState } from 'react';
 import { AppState, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import { Context as DefibrillatorContext } from '../context/DefibrillatorContext';
+import { Context as NeophytesContext } from '../context/NeophytesContext';
 import { Context as LocationContext } from '../context/LocationContext';
-import useDefibrillators from '../hooks/useDefibrillators';
+import useNeophytes from '../hooks/useNeophytes';
 import useLocation from '../hooks/useLocation';
 import Map from '../components/Map';
 import LocationError from '../components/LocationError';
@@ -13,9 +13,9 @@ const MainScreen = ({ navigation }) => {
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const insets = useSafeAreaInsets();
-  const { state: { defibrillators, loading }, getDefibrillators, setDefisNearLocation } = useContext(DefibrillatorContext);
+  const { state: { items, loading }, getItems } = useContext(NeophytesContext);
   const { state: userLocation, updateLocation, enableLocationTracking, setLocationTracker } = useContext(LocationContext);
-  useDefibrillators(defibrillators, getDefibrillators, setDefisNearLocation, userLocation);
+  useNeophytes(items, getItems, userLocation);
   const [locationErr, resetErr] = useLocation(userLocation, updateLocation, enableLocationTracking, setLocationTracker);
   const mapRef = useRef(null);
   const [isCreateMode, setIsCreateMode] = useState(false);
@@ -77,15 +77,12 @@ const MainScreen = ({ navigation }) => {
           latitudeDelta: 1.5,
           longitudeDelta: 1.5,
         }}
-        defibrillators={defibrillators}
-        defibrillatorsLoading={loading}
+        items={items}
+        itemsLoading={loading}
         isCreateMode={isCreateMode}
         setIsCreateMode={setIsCreateMode}
       />
       <View style={bottomBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('List')}>
-          <Feather name='list' style={styles.iconStyle} />
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => setIsCreateMode(true)}>
           <Feather name='plus-circle' style={styles.iconStyle} />
         </TouchableOpacity>
