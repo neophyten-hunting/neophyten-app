@@ -5,7 +5,7 @@ export default (items, getItems, userLocation) => {
   const calculateDistance = (items, location) => {
     items.forEach(d => {
       if (location) {
-        const dist = distanceBetweenPoints(d.lat, d.lon, location.latitude, location.longitude);
+        const dist = distanceBetweenPoints(d.latitude, d.longitude, location.latitude, location.longitude);
         d.distance = dist;
       }
     });

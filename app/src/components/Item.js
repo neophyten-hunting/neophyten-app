@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import openMap from 'react-native-open-maps';
 
 const Item = ({ item, navigation }) => {
-  const locationText = item.distance ? `${item.distance}m / ${item.lat.toFixed(4)}, ${item.lon.toFixed(4)}` : `${item.lat.toFixed(4)}, ${item.lon.toFixed(4)}`;
+  const locationText = item.distance ? `${item.distance}m / ${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}` : `${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}`;
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Detail', { item })}>
       <View style={styles.outsideContainerStyle}>
@@ -17,7 +17,7 @@ const Item = ({ item, navigation }) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => openMap({ latitude: item.lat, longitude: item.lon, end: `${item.lat}, ${item.lon}`, query: item.location })}>
+          onPress={() => openMap({ latitude: item.latitude, longitude: item.longitude, end: `${item.latitude}, ${item.longitude}`, query: item.location })}>
           <Feather style={styles.navigationIconStyle} name='navigation' />
         </TouchableOpacity>
       </View>

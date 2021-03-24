@@ -52,7 +52,7 @@ const Map = ({ initCoords, mapRef, items, itemsLoading, isCreateMode, setIsCreat
           <Marker
             pinColor="green"
             key={item.id.toString()}
-            coordinate={{ latitude: item.lat, longitude: item.lon }}
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
           />
         );
       }

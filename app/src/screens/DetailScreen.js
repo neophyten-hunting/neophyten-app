@@ -12,8 +12,8 @@ const DetailScreen = ({ navigation }) => {
   const item = navigation.getParam('item');
 
   const initCoords = {
-    latitude: item.lat,
-    longitude: item.lon,
+    latitude: item.latitude,
+    longitude: item.longitude,
     latitudeDelta: 0.001,
     longitudeDelta: 0.001
   };
@@ -29,7 +29,7 @@ const DetailScreen = ({ navigation }) => {
           scrollEnabled={false}
           rotateEnabled={false}
           zoomEnabled={false}
-          onPress={() => { navigation.navigate('Main', { latlng: { latitude: item.lat, longitude: item.lon } }) }}
+          onPress={() => { navigation.navigate('Main', { latlng: { latitude: item.latitude, longitude: item.longitude } }) }}
         >
           <UrlTile
             urlTemplate='http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -39,7 +39,7 @@ const DetailScreen = ({ navigation }) => {
           <Marker
             pinColor="green"
             key={item.id.toString()}
-            coordinate={{ latitude: item.lat, longitude: item.lon }}
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
           />
         </MapView>
         <OsmContributerOverlay show={true} />
@@ -50,7 +50,7 @@ const DetailScreen = ({ navigation }) => {
         <View style={styles.buttonContainerStyle}>
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={() => openMap({ latitude: item.lat, longitude: item.lon, end: `${item.lat}, ${item.lon}`, query: name, travelType: 'walk' })}
+            onPress={() => openMap({ latitude: item.latitude, longitude: item.longitude, end: `${item.latitude}, ${item.longitude}`, query: name, travelType: 'walk' })}
           >
             <Feather style={styles.navigationIconStyle} name='navigation' />
             <Text style={styles.buttonTextStyle}>Navigieren</Text>
