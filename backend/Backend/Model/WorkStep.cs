@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 
 namespace Backend.Model
 {
@@ -8,6 +8,7 @@ namespace Backend.Model
     {
         public DateTime CreateDateTime { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))] 
         public WorkState State { get; set; }
 
         public string Description { get; set; }

@@ -225,7 +225,8 @@ namespace Backend
                 newWorkStep.CreateDateTime = DateTime.Now;
                 neophyteLocation.WorkSteps.Add(newWorkStep);
 
-                await client.ReplaceDocumentAsync(neophyteDoc.SelfLink, neophyteLocation);
+                var requestOptions = new RequestOptions { PartitionKey = new PartitionKey($"{neophyteDoc.Id}") };
+                await client.ReplaceDocumentAsync(neophyteDoc.SelfLink, neophyteLocation, requestOptions);
 
                 log.LogInformation($"Added new status {neophyteLocation.Id}");
                 return new OkObjectResult(neophyteLocation) { StatusCode = 201 };

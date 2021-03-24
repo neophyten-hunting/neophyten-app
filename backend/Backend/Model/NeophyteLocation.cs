@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Backend.Model
@@ -10,6 +11,7 @@ namespace Backend.Model
             this.WorkSteps = new List<WorkStep>();
         }
 
+        [JsonProperty("id")]
         public string Id { get; set; }
 
         public double Longitude { get; set; }
