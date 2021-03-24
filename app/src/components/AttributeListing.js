@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 
-const AttributeListing = ({ title, iconName, value }) => {
+const AttributeListing = ({ title, iconName, value, isLink = false }) => {
   return (
     <View style={styles.containerStyle} >
       <Feather style={styles.iconStyle} name={iconName} />
@@ -10,6 +10,7 @@ const AttributeListing = ({ title, iconName, value }) => {
         <Text style={styles.titleStyle}>{title}</Text>
         <Text style={styles.valueStyle}>{value ?? 'n/A'}</Text>
       </View>
+      <Feather style={styles.iconStyle} name={isLink ? "chevron-right" : null} />
     </View>
   );
 };

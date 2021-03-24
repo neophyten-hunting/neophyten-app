@@ -21,9 +21,7 @@ const DetailScreen = ({ navigation }) => {
   let latestWorkStep = item.workSteps.reduce((a, b) => {
     var max = Math.max(new Date(a.createdDateTime), new Date(b.createdDateTime))
     return new Date(max) === new Date(a.createdDateTime) ? a : b;
-  })
-
-  console.log(latestWorkStep);
+  });
 
   let containerStyle = { ...styles.containerStyle };
   containerStyle.paddingBottom = insets.bottom * 0.5;
@@ -68,7 +66,7 @@ const DetailScreen = ({ navigation }) => {
         <AttributeListing title="Beschreibung" iconName="list" value={item.description} />
         <AttributeListing title="Art" iconName="info" value={item.plantName} />
         <TouchableOpacity>
-          <AttributeListing title="Aktivität" iconName="" value={`${item.workSteps[0].state} am ${item.workSteps[0].createdDateTime}`} />
+          <AttributeListing title="Aktivität" isLink={true} iconName="activity" value={`${latestWorkStep.state} am ${new Date(latestWorkStep.createdDateTime).toLocaleDateString()}`} />
         </TouchableOpacity>
       </ScrollView>
     </View >
