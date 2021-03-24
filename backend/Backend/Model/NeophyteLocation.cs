@@ -22,6 +22,8 @@ namespace Backend.Model
 
         public string Description { get; set; }
 
+        public string PlantName { get; set; }
+
         public string Source { get; set; }
 
         public IList<WorkStep> WorkSteps { get; set; }
