@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import MapView, { UrlTile } from 'react-native-maps';
+import MapView, { Marker, UrlTile } from 'react-native-maps';
 import openMap from 'react-native-open-maps';
 import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
@@ -37,7 +37,7 @@ const DetailScreen = ({ navigation }) => {
             flipY={false}
           />
           <Marker
-            pinColor="green"
+            pinColor="red"
             key={item.id.toString()}
             coordinate={{ latitude: item.latitude, longitude: item.longitude }}
           />
@@ -45,12 +45,11 @@ const DetailScreen = ({ navigation }) => {
         <OsmContributerOverlay show={true} />
       </View>
       <View style={styles.innerContainerStyle}>
-        <Text style={styles.titleStyle}>{name}</Text>
-        {newInfo}
+        <Text style={styles.titleStyle}>{item.location}</Text>
         <View style={styles.buttonContainerStyle}>
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={() => openMap({ latitude: item.latitude, longitude: item.longitude, end: `${item.latitude}, ${item.longitude}`, query: name, travelType: 'walk' })}
+            onPress={() => openMap({ latitude: item.latitude, longitude: item.longitude, end: `${item.latitude}, ${item.longitude}`, query: item.location, travelType: 'walk' })}
           >
             <Feather style={styles.navigationIconStyle} name='navigation' />
             <Text style={styles.buttonTextStyle}>Navigieren</Text>

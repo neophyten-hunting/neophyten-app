@@ -50,9 +50,11 @@ const Map = ({ initCoords, mapRef, items, itemsLoading, isCreateMode, setIsCreat
       return items.map((item) => {
         return (
           <Marker
-            pinColor="green"
+            pinColor={selectedItem && selectedItem.id === item.id ? 'red' : 'green'}
             key={item.id.toString()}
             coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+            onPress={() => setSelectedItem(item)
+            }
           />
         );
       }
