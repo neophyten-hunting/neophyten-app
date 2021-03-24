@@ -34,7 +34,7 @@ const addItem = dispatch => {
   return async (item, callback) => {
     try {
       dispatch({ type: 'update_creating', payload: true });
-      const response = await backend.post('/v1/neophytes', item);
+      await backend.post('/v1/neophytes', item);
 
       // ToDo: Update all
       if (callback) {
@@ -49,6 +49,19 @@ const addItem = dispatch => {
   };
 };
 
+const updateWorkState = dispatch => {
+  return async (id, workState) => {
+    try {
+      dispatch({ type: 'update_creating', payload: true });
+      await backend.post(`/v1/neophytes/${id}/steps`, workState)
+    } catch (error) {
+      dispatch({ type: 'update_error', payload: 'Status konnte nicht hinzugefügt werden.' });
+    } finally {
+      dispatch({ type: 'update_creating', payload: false });
+    }
+  }
+}
+
 const resetError = dispatch => {
   return () => {
     dispatch({ type: 'update_error', payload: '' })
@@ -57,6 +70,6 @@ const resetError = dispatch => {
 
 export const { Context, Provider } = createDataContext(
   reducer,
-  { getItems, addItem, resetError },
+  { getItems, addItem, updateWorkState, resetError },
   { items: [], loading: false, creating: false, error: '' }
 );

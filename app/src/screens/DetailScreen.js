@@ -18,6 +18,13 @@ const DetailScreen = ({ navigation }) => {
     longitudeDelta: 0.001
   };
 
+  let latestWorkStep = item.workSteps.reduce((a, b) => {
+    var max = Math.max(new Date(a.createdDateTime), new Date(b.createdDateTime))
+    return new Date(max) === new Date(a.createdDateTime) ? a : b;
+  })
+
+  console.log(latestWorkStep);
+
   let containerStyle = { ...styles.containerStyle };
   containerStyle.paddingBottom = insets.bottom * 0.5;
   return (
@@ -60,6 +67,9 @@ const DetailScreen = ({ navigation }) => {
         <AttributeListing title="Standort" iconName="map-pin" value={item.location} />
         <AttributeListing title="Beschreibung" iconName="list" value={item.description} />
         <AttributeListing title="Art" iconName="info" value={item.plantName} />
+        <TouchableOpacity>
+          <AttributeListing title="Aktivität" iconName="" value={`${item.workSteps[0].state} am ${item.workSteps[0].createdDateTime}`} />
+        </TouchableOpacity>
       </ScrollView>
     </View >
   );

@@ -161,7 +161,7 @@ namespace Backend
                 newNeophyte.CreatedDateTime = DateTime.Now;
                 newNeophyte.WorkSteps.Add(new WorkStep
                 {
-                    CreateDateTime = DateTime.Now,
+                    CreatedDateTime = DateTime.Now,
                     Description = "Created on given location",
                     State = WorkState.Created,
                 });
@@ -222,7 +222,7 @@ namespace Backend
                 var newWorkStep = JsonConvert.DeserializeObject<WorkStep>(requestBody);
                 var neophyteLocation = JsonConvert.DeserializeObject<NeophyteLocation>(neophyteDoc.ToString());
                 neophyteLocation.ModifiedDateTime = DateTime.Now;
-                newWorkStep.CreateDateTime = DateTime.Now;
+                newWorkStep.CreatedDateTime = DateTime.Now;
                 neophyteLocation.WorkSteps.Add(newWorkStep);
 
                 var requestOptions = new RequestOptions { PartitionKey = new PartitionKey($"{neophyteDoc.Id}") };
