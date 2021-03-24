@@ -59,6 +59,7 @@ const DetailScreen = ({ navigation }) => {
       <ScrollView >
         <AttributeListing title="Standort" iconName="map-pin" value={item.location} />
         <AttributeListing title="Beschreibung" iconName="list" value={item.description} />
+        <AttributeListing title="Art" iconName="info" value={item.plantName} />
       </ScrollView>
     </View >
   );
