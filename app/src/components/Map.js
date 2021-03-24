@@ -68,7 +68,7 @@ const Map = ({ initCoords, mapRef, items, itemsLoading, isCreateMode, setIsCreat
         newItemCoords={newItemCoords} />
     }
     else if (selectedItem != null) {
-      return <DetailMapOverlay defibrillator={selectedItem} />
+      return <DetailMapOverlay item={selectedItem} />
     } else {
       return null;
     }
