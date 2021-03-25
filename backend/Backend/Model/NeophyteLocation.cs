@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Backend.Model
@@ -33,5 +34,13 @@ namespace Backend.Model
         public DateTime CreatedDateTime { get; set; }
 
         public DateTime? ModifiedDateTime { get; set; }
+
+        public WorkStep LatestWorkStep
+        {
+            get
+            {
+                 return this.WorkSteps.OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+            }
+        }
     }
 }

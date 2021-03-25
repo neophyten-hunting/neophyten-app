@@ -11,6 +11,8 @@ namespace Backend.Model
         [JsonConverter(typeof(StringEnumConverter))] 
         public WorkState State { get; set; }
 
+        public string Reporter { get; set; }
+
         public string Description { get; set; }
     }
 }

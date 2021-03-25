@@ -164,6 +164,7 @@ namespace Backend
                     CreatedDateTime = DateTime.Now,
                     Description = "Created on given location",
                     State = WorkState.Created,
+                    Reporter = newNeophyte.Reporter,
                 });
                 await neophytes.AddAsync(newNeophyte);
 
