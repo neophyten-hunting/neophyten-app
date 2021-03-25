@@ -1,14 +1,15 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Linking, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
-import openMap from 'react-native-open-maps';
 import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
+import NavigationButton from '../components/NavigationButton';
+import AddActivity from '../components/AddActivity';
 
 const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  const [addFormVisible, setAddFormVisible] = useState(false);
   const item = navigation.getParam('item');
 
   const initCoords = {
@@ -17,11 +18,6 @@ const DetailScreen = ({ navigation }) => {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001
   };
-
-  let latestWorkStep = item.workSteps.reduce((a, b) => {
-    var max = Math.max(new Date(a.createdDateTime), new Date(b.createdDateTime))
-    return new Date(max) === new Date(a.createdDateTime) ? a : b;
-  });
 
   let containerStyle = { ...styles.containerStyle };
   containerStyle.paddingBottom = insets.bottom * 0.5;
@@ -49,29 +45,32 @@ const DetailScreen = ({ navigation }) => {
         </MapView>
         <OsmContributerOverlay show={true} />
       </View>
-      <View style={styles.innerContainerStyle}>
-        <Text style={styles.titleStyle}>{item.location}</Text>
-        <View style={styles.buttonContainerStyle}>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={() => openMap({ latitude: item.latitude, longitude: item.longitude, end: `${item.latitude}, ${item.longitude}`, query: item.location, travelType: 'walk' })}
-          >
-            <Feather style={styles.navigationIconStyle} name='navigation' />
-            <Text style={styles.buttonTextStyle}>Navigieren</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
       <ScrollView >
         <AttributeListing title="Standort" iconName="map-pin" value={item.location} />
         <AttributeListing title="Beschreibung" iconName="list" value={item.description} />
         <AttributeListing title="Art" iconName="info" value={item.plantName} />
-        <TouchableOpacity>
-          <AttributeListing title="Aktivität" isLink={true} iconName="activity" value={`${latestWorkStep.state} am ${new Date(latestWorkStep.createdDateTime).toLocaleDateString()}`} />
+        <TouchableOpacity onPress={() => navigation.navigate('Activity', { item })}>
+          <AttributeListing title="Aktivität" isLink={true} iconName="activity" value={`${item.latestWorkStep.state} am ${new Date(item.latestWorkStep.createdDateTime).toLocaleDateString()}`} />
         </TouchableOpacity>
       </ScrollView>
+      <TouchableOpacity
+        onPress={() => setAddFormVisible(true)}
+        style={styles.buttonContainerStyle}
+      >
+        <View style={styles.buttonStyle}>
+          <Text style={styles.buttonTextStyle}>Aktivität hinzufügen</Text>
+        </View>
+      </TouchableOpacity>
+      <AddActivity isVisible={addFormVisible} setIsVisible={setAddFormVisible} />
     </View >
   );
 };
+
+DetailScreen.navigationOptions = ({ navigation }) => ({
+  headerRight: () => {
+    <NavigationButton item={navigation.getParam('item')} />
+  }
+});
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -100,14 +99,12 @@ const styles = StyleSheet.create({
     margin: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonTextStyle: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
-  },
-  buttonContainerStyle: {
-    flexDirection: 'row',
   },
   navigationIconStyle: {
     fontSize: 18,

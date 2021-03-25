@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useEffect, useState } from 'react';
-import { AppState, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
@@ -10,8 +10,6 @@ import Map from '../components/Map';
 import LocationError from '../components/LocationError';
 
 const MainScreen = ({ navigation }) => {
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const insets = useSafeAreaInsets();
   const { state: { items, loading }, getItems } = useContext(NeophytesContext);
   const { state: userLocation, updateLocation, enableLocationTracking, setLocationTracker } = useContext(LocationContext);
@@ -42,28 +40,6 @@ const MainScreen = ({ navigation }) => {
       resetErr();
     }
   }, [locationErr]);
-
-  useEffect(() => {
-    AppState.addEventListener("change", _handleAppStateChange);
-
-    return () => {
-      AppState.removeEventListener("change", _handleAppStateChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (appStateVisible === "active") {
-      enableLocationTracking(true);
-    }
-    else {
-      enableLocationTracking(false);
-    }
-  }, [appStateVisible])
-
-  const _handleAppStateChange = (nextAppState) => {
-    appState.current = nextAppState;
-    setAppStateVisible(appState.current);
-  };
 
   let bottomBar = { ...styles.bottomBar };
   bottomBar.paddingBottom = insets.bottom * 0.5;
