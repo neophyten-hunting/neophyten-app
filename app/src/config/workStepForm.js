@@ -6,7 +6,7 @@ export default [
     label: 'Bearbeiter',
     placeholder: 'Max Mustermann',
     defaultValue: '',
-    errorMsg: 'Der Melder wird benötigt',
+    errorMsg: 'Der Bearbeiter wird benötigt',
   },
   {
     name: 'description',
@@ -25,5 +25,12 @@ export default [
     label: 'Status',
     placeholder: 'Chinesische Samtpappel',
     defaultValue: 'WorkInProgress',
+    items:
+      [
+        { label: 'Erstellt', value: 'Created', hidden: true },
+        { label: 'In Bearbeitung', value: 'WorkInProgress' },
+        { label: 'Erledigt', value: 'Done' },
+      ],
+    errorMsg: 'Der Status wird benötigt',
   },
 ]

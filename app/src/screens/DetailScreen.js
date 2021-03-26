@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
+import { Context as NeophytesContext } from '../context/NeophytesContext';
 import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
 import NavigationButton from '../components/NavigationButton';
@@ -9,6 +10,7 @@ import AddActivity from '../components/AddActivity';
 
 const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
+  const { state: itemState, getItems, updateWorkState, resetError } = useContext(NeophytesContext);
   const [addFormVisible, setAddFormVisible] = useState(false);
   const item = navigation.getParam('item');
 
@@ -18,6 +20,12 @@ const DetailScreen = ({ navigation }) => {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001
   };
+
+  const onSubmit = async (form) => {
+    await updateWorkState(item.id, form);
+    setAddFormVisible(false);
+    await getItems();
+  }
 
   let containerStyle = { ...styles.containerStyle };
   containerStyle.paddingBottom = insets.bottom * 0.5;
@@ -61,7 +69,7 @@ const DetailScreen = ({ navigation }) => {
           <Text style={styles.buttonTextStyle}>Aktivität hinzufügen</Text>
         </View>
       </TouchableOpacity>
-      <AddActivity isVisible={addFormVisible} setIsVisible={setAddFormVisible} />
+      <AddActivity isVisible={addFormVisible} setIsVisible={setAddFormVisible} onSubmit={onSubmit} />
     </View >
   );
 };

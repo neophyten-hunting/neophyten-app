@@ -5,12 +5,8 @@ import TextForm from './TextForm';
 import workStepFrom from '../config/workStepForm';
 import DropdownForm from './DropdownForm';
 
-const AddActivity = ({ isVisible, setIsVisible }) => {
+const AddActivity = ({ isVisible, setIsVisible, onSubmit }) => {
   const { control, handleSubmit, errors } = useForm();
-
-  const onSubmit = (form) => {
-    console.log(form)
-  }
 
   const renderFormComponent = () => {
     return workStepFrom.map((formComp, index) => {
@@ -54,6 +50,8 @@ const AddActivity = ({ isVisible, setIsVisible }) => {
           defaultValue={formComp.defaultValue}
           key={index}
           labelText={formComp.label}
+          items={formComp.items}
+          style={{ zIndex: 1000 }}
         />
       }
       else {
@@ -69,7 +67,6 @@ const AddActivity = ({ isVisible, setIsVisible }) => {
         transparent={true}
         visible={isVisible}
         onRequestClose={() => {
-          console.log('onrequestclose')
           setIsVisible(!isVisible);
         }}
       >
@@ -93,7 +90,7 @@ const AddActivity = ({ isVisible, setIsVisible }) => {
                 //disabled={itemState.creating}
                 color='white'
                 title='Hinzufügen'
-              //onPress={handleSubmit(onSubmit)} 
+                onPress={handleSubmit(onSubmit)}
               >
                 <Text style={styles.buttonTextStyle}>Hinzufügen</Text>
               </TouchableOpacity>
@@ -116,6 +113,7 @@ const styles = StyleSheet.create({
   fullViewStyle: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
+    backgroundColor: 'rgba(40, 40, 40, 0.5)',
   },
   containerStyle: {
     marginTop: 80,
@@ -133,6 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    zIndex: -1,
   },
   buttonTextStyle: {
     color: 'white',
