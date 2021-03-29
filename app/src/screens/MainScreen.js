@@ -48,17 +48,20 @@ const MainScreen = ({ navigation }) => {
       <Map
         mapRef={mapRef}
         initCoords={{
-          latitude: 47,
-          longitude: 7.4,
+          latitude: 47.52,
+          longitude: 8.54,
           latitudeDelta: 1.5,
           longitudeDelta: 1.5,
         }}
-        items={items}
+        items={items.filter(e => e.latestWorkStep.state !== 'Done')}
         itemsLoading={loading}
         isCreateMode={isCreateMode}
         setIsCreateMode={setIsCreateMode}
       />
       <View style={bottomBar}>
+        <TouchableOpacity onPress={() => navigation.navigate('User')}>
+          <Feather name='user' style={styles.iconStyle} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => setIsCreateMode(true)}>
           <Feather name='plus-circle' style={styles.iconStyle} />
         </TouchableOpacity>
