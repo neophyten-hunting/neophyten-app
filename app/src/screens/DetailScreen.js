@@ -2,12 +2,14 @@ import React, { useState, useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
+import moment from 'moment/min/moment-with-locales';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
 import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
 import NavigationButton from '../components/NavigationButton';
 import AddActivity from '../components/AddActivity';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import stateTranslation from '../helpers/stateTranslation';
 
 const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -62,7 +64,11 @@ const DetailScreen = ({ navigation }) => {
           <MaterialCommunityIcons style={styles.iconStyle} name='flower' />
         </AttributeListing>
         <TouchableOpacity onPress={() => navigation.navigate('Activity', { item })}>
-          <AttributeListing title="Aktivität" isLink={true} iconName="activity" value={`${item.latestWorkStep.state} am ${new Date(item.latestWorkStep.createdDateTime).toLocaleDateString()}`} />
+          <AttributeListing
+            title="Aktivität"
+            isLink={true}
+            iconName="activity"
+            value={`${stateTranslation(item.latestWorkStep.state)} am ${moment(item.latestWorkStep.createdDateTime).format('LLL')}`} />
         </TouchableOpacity>
       </ScrollView>
       <TouchableOpacity

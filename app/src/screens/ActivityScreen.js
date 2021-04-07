@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment/min/moment-with-locales';
+import stateTranslation from '../helpers/stateTranslation';
 
 const ActivityScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -10,7 +11,7 @@ const ActivityScreen = ({ navigation }) => {
   const activities = item.workSteps.map((w, index) => {
     return (
       <View style={styles.activityStyle} key={index}>
-        <Text style={styles.titleStyle}>{w.state}</Text>
+        <Text style={styles.titleStyle}>{stateTranslation(w.state)}</Text>
         <Text style={styles.subtitleStyle}>Aktivitätsdatum</Text>
         <Text>{moment(w.createdDateTime).format('LLL')}</Text>
         <Text style={styles.subtitleStyle}>Bearbeiter</Text>
