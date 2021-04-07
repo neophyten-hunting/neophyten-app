@@ -24,7 +24,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit, isCreating }) => {
           multiline={formComp.multiline}
           useSwitch={formComp.useSwitch}
           placeholder={formComp.placeholder}
-        //disabled={itemState.creating}
+          disabled={isCreating}
         />
       }
       else if (formComp.type === 'Switch') {
@@ -37,7 +37,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit, isCreating }) => {
           defaultValue={formComp.defaultValue}
           key={index}
           labelText={formComp.label}
-        //disabled={itemState.creating}
+          disabled={isCreating}
         />
       }
       else if (formComp.type === 'Dropdown') {
@@ -51,7 +51,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit, isCreating }) => {
           key={index}
           labelText={formComp.label}
           items={formComp.items}
-          style={{ zIndex: 1000 }}
+          disabled={isCreating}
         />
       }
       else {

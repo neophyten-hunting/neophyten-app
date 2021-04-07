@@ -27,7 +27,6 @@ export default [
     defaultValue: 'WorkInProgress',
     items:
       [
-        { label: 'Erstellt', value: 'Created', hidden: true },
         { label: 'In Bearbeitung', value: 'WorkInProgress' },
         { label: 'Erledigt', value: 'Done' },
       ],

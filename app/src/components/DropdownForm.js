@@ -23,7 +23,7 @@ const DropdownForm = ({ labelText, name, control, rules, errors, errorMsg, defau
         rules={rules}
         defaultValue={defaultValue}
         render={({ onChange, onBlur, value }) => (
-          <View style={visible ? null : { height: 0 }}>
+          <View style={visible && !disabled ? null : { height: 0 }}>
             {
               items.map(e => {
                 var iconName = e.value === selectedValue.value ? 'check-circle' : 'circle';
