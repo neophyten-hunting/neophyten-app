@@ -6,7 +6,6 @@ import openMap from 'react-native-open-maps';
 import NavigationButton from './NavigationButton';
 
 const Item = ({ item, navigation }) => {
-  const locationName = '';
   const locationText = item.distance ? `${item.distance}m / ${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}` : `${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}`;
 
   return (
@@ -15,7 +14,7 @@ const Item = ({ item, navigation }) => {
         <View style={styles.containerStyle}>
           <View style={styles.inlineStyle}>
             <MaterialCommunityIcons style={styles.inlineIconStyle} name='flower' />
-            <Text numberOfLines={1} style={styles.inlineTextStyle}>{item.plantName}</Text>
+            <Text numberOfLines={1} style={styles.inlineTextStyle}>{item.plantName ?? 'n/a'}</Text>
           </View>
           <View style={styles.inlineStyle}>
             <MaterialIcons style={styles.inlineIconStyle} name='map' />

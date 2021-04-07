@@ -15,7 +15,7 @@ import ErrorBoundary from './src/components/ErrorBoundary';
 
 const navigator = createStackNavigator({
   Main: { screen: MainScreen, navigationOptions: { title: 'Karte', headerShown: false } },
-  Create: { screen: CreateScreen, navigationOptions: { title: 'Item melden', headerShown: true } },
+  Create: { screen: CreateScreen, navigationOptions: { title: 'Standort melden', headerShown: true } },
   Detail: { screen: DetailScreen, navigationOptions: { title: 'Detailansicht', headerShown: true, } },
   Activity: { screen: ActivityScreen, navigationOptions: { title: 'Aktivitäten', headerShown: true } },
   About: { screen: AboutScreen, navigationOptions: { title: 'About', headerShown: true } },
