@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
-const AttributeListing = ({ title, iconName, value, isLink = false }) => {
+const AttributeListing = ({ children, title, iconName, value, isLink = false }) => {
+  const renderReadyChild = children ? React.cloneElement(children, { style: styles.iconStyle }) : null;
+
   return (
     <View style={styles.containerStyle} >
-      <Feather style={styles.iconStyle} name={iconName} />
+      {renderReadyChild ?? <Feather style={styles.iconStyle} name={iconName} />}
       <View style={styles.innerContainerStyle}>
         <Text style={styles.titleStyle}>{title}</Text>
         <Text style={styles.valueStyle}>{value ?? 'n/A'}</Text>

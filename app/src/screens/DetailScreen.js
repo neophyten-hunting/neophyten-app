@@ -7,6 +7,7 @@ import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
 import NavigationButton from '../components/NavigationButton';
 import AddActivity from '../components/AddActivity';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -54,9 +55,12 @@ const DetailScreen = ({ navigation }) => {
         <OsmContributerOverlay show={true} />
       </View>
       <ScrollView >
-        <AttributeListing title="Standort" iconName="map-pin" value={item.location} />
+        <AttributeListing title="Standort" iconName="map-pin" value={item.location} >
+        </AttributeListing>
         <AttributeListing title="Beschreibung" iconName="list" value={item.description} />
-        <AttributeListing title="Art" iconName="info" value={item.plantName} />
+        <AttributeListing title="Art" iconName="flower" value={item.plantName} >
+          <MaterialCommunityIcons style={styles.iconStyle} name='flower' />
+        </AttributeListing>
         <TouchableOpacity onPress={() => navigation.navigate('Activity', { item })}>
           <AttributeListing title="Aktivität" isLink={true} iconName="activity" value={`${item.latestWorkStep.state} am ${new Date(item.latestWorkStep.createdDateTime).toLocaleDateString()}`} />
         </TouchableOpacity>
