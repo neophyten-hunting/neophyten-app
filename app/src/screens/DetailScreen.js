@@ -7,7 +7,7 @@ import AttributeListing from '../components/AttributeListing';
 import OsmContributerOverlay from '../components/OsmContributerOverlay';
 import NavigationButton from '../components/NavigationButton';
 import AddActivity from '../components/AddActivity';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -80,7 +80,7 @@ const DetailScreen = ({ navigation }) => {
 
 DetailScreen.navigationOptions = ({ navigation }) => ({
   headerRight: () => {
-    <NavigationButton item={navigation.getParam('item')} />
+    return <NavigationButton item={navigation.getParam('item')} />
   }
 });
 

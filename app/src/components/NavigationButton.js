@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import openMap from 'react-native-open-maps';
 
@@ -17,7 +17,7 @@ const NavigationButton = ({ item }) => {
 const styles = StyleSheet.create({
   navigationIconStyle: {
     fontSize: 24,
-    marginRight: 10,
+    marginRight: 20,
     color: '#007AFF',
   },
 });
