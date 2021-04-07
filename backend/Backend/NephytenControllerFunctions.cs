@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Backend.Model;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -82,6 +86,47 @@ namespace Backend
             return new OkObjectResult(neophyteLocations);
         }
 
+        [FunctionName("Neophyte_CSV_V1")]
+        public async Task<IActionResult> GetCsv(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/neophytes.csv")] HttpRequestMessage req,
+            [CosmosDB(
+                databaseName: "%cosmosDBName%",
+                collectionName: "%cosmosDBCollection%",
+                ConnectionStringSetting = "cosmosDBConnection")]
+            IEnumerable<NeophyteLocation> neophyteLocations,
+            ILogger log)
+        {
+            log.LogInformation($"Validate token");
+            //if (await security.IsUserAuthorizedAsync(req.Headers.Authorization, new string[] { "Reader", "Admin" }) == false)
+            //{
+            //    return new UnauthorizedResult();
+            //}
+
+            if (neophyteLocations == null)
+            {
+                return new NotFoundResult();
+            }
+
+            var result = new StringBuilder();
+            using (TextWriter writer = new StringWriter(result))
+            {
+                var config = new CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture)
+                {
+                    Delimiter = ";",
+                    MissingFieldFound = null,
+                    IgnoreReferences = true,
+                };
+
+                using (CsvWriter csv = new CsvWriter(writer, config))
+                {
+                    csv.WriteHeader(typeof(NeophyteLocation));
+                    await csv.WriteRecordsAsync(neophyteLocations);
+                }
+            }
+
+            log.LogInformation($"Got customers {neophyteLocations.Count()}");
+            return new OkObjectResult(result.ToString());
+        }
 
         [FunctionName("Neophyte_Delete_V1")]
         public async Task<IActionResult> Delete(
