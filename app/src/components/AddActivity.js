@@ -1,11 +1,11 @@
 import React from 'react';
-import { Modal, View, TouchableOpacity, Text, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { Modal, View, TouchableOpacity, Text, StyleSheet, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { useForm } from 'react-hook-form';
 import TextForm from './TextForm';
 import workStepFrom from '../config/workStepForm';
 import DropdownForm from './DropdownForm';
 
-const AddActivity = ({ isVisible, setIsVisible, onSubmit }) => {
+const AddActivity = ({ isVisible, setIsVisible, onSubmit, isCreating }) => {
   const { control, handleSubmit, errors } = useForm();
 
   const renderFormComponent = () => {
@@ -71,6 +71,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit }) => {
         }}
       >
         <View style={styles.fullViewStyle}>
+          <ActivityIndicator style={styles.loadingStyle} size="large" color="green" animating={isCreating} />
           <View style={styles.containerStyle}>
             <Text style={styles.titleStyle}>Aktivität hinzufügen</Text>
             <ScrollView
@@ -87,7 +88,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit }) => {
             </ScrollView>
             <View style={styles.bottomBar}>
               <TouchableOpacity
-                //disabled={itemState.creating}
+                disabled={isCreating}
                 color='white'
                 title='Hinzufügen'
                 onPress={handleSubmit(onSubmit)}
@@ -95,7 +96,7 @@ const AddActivity = ({ isVisible, setIsVisible, onSubmit }) => {
                 <Text style={styles.buttonTextStyle}>Hinzufügen</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                //disabled={itemState.creating}
+                disabled={isCreating}
                 color='white'
                 title='Abbrechen'
                 onPress={() => setIsVisible(false)} >
@@ -142,6 +143,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     margin: 10,
+  },
+  loadingStyle: {
+    position: 'absolute',
+    marginTop: 200,
+    alignSelf: 'center',
+    zIndex: 200,
   },
 });
 

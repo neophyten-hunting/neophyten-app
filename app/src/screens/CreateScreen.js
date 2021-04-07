@@ -42,9 +42,6 @@ const CreateScreen = ({ navigation }) => {
     }
   }, [isSubmitted])
 
-  useEffect(() => {
-  }, [state]);
-
   const renderFormComponent = () => {
     return createForm.map((formComp, index) => {
       if (formComp.type === 'Text') {

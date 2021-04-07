@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
@@ -15,7 +15,9 @@ const DetailScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { state: itemState, getItems, updateWorkState, resetError } = useContext(NeophytesContext);
   const [addFormVisible, setAddFormVisible] = useState(false);
-  const item = navigation.getParam('item');
+  const [item, setItem] = useState(navigation.getParam('item'));
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [newWorkStep, setNewWorkStep] = useState();
 
   const initCoords = {
     latitude: item.latitude,
@@ -24,11 +26,31 @@ const DetailScreen = ({ navigation }) => {
     longitudeDelta: 0.001
   };
 
-  const onSubmit = async (form) => {
-    await updateWorkState(item.id, form);
+  const onSubmit = (formValues) => {
+    setNewWorkStep(formValues);
+    setIsSubmitted(true);
+  }
+
+  const add = async () => {
+    await updateWorkState(item.id, newWorkStep);
     setAddFormVisible(false);
     await getItems();
   }
+
+  useEffect(() => {
+    if (isSubmitted) {
+      add();
+      setIsSubmitted(false);
+    }
+    else {
+      resetError();
+    }
+  }, [isSubmitted])
+
+  useEffect(() => {
+    let updatedItem = itemState.items.find(e => e.id === item.id);
+    setItem(updatedItem);
+  }, [itemState])
 
   let containerStyle = { ...styles.containerStyle };
   containerStyle.paddingBottom = insets.bottom * 0.5;
@@ -79,7 +101,7 @@ const DetailScreen = ({ navigation }) => {
           <Text style={styles.buttonTextStyle}>Aktivität hinzufügen</Text>
         </View>
       </TouchableOpacity>
-      <AddActivity isVisible={addFormVisible} setIsVisible={setAddFormVisible} onSubmit={onSubmit} />
+      <AddActivity isVisible={addFormVisible} setIsVisible={setAddFormVisible} onSubmit={onSubmit} isCreating={itemState.creating} />
     </View >
   );
 };
