@@ -33,7 +33,9 @@ class ErrorBoundary extends React.Component {
 const styles = StyleSheet.create({
   containerStyle: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   errorTextStyle: {
     margin: 20,

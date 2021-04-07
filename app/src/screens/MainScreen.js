@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Button, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
@@ -8,6 +8,8 @@ import useNeophytes from '../hooks/useNeophytes';
 import useLocation from '../hooks/useLocation';
 import Map from '../components/Map';
 import LocationError from '../components/LocationError';
+import SimpleMenu from '../components/SimpleMenu';
+import CsvExport from '../components/CsvExport';
 
 const MainScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -17,6 +19,7 @@ const MainScreen = ({ navigation }) => {
   const [locationErr, resetErr] = useLocation(userLocation, updateLocation, enableLocationTracking, setLocationTracker);
   const mapRef = useRef(null);
   const [isCreateMode, setIsCreateMode] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const animateToRegion = ({ latitude, longitude }) => {
     mapRef.current.animateToRegion({
@@ -65,10 +68,15 @@ const MainScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => setIsCreateMode(true)}>
           <Feather name='plus-circle' style={styles.iconStyle} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('About')}>
-          <Feather name='info' style={styles.iconStyle} />
+        <TouchableOpacity onPress={() => setVisible(!visible)}>
+          <Feather name='menu' style={styles.iconStyle} />
         </TouchableOpacity>
       </View>
+      <SimpleMenu isVisible={visible} setIsVisible={setVisible} >
+        <Button title="Über" onPress={() => { setVisible(false); navigation.navigate('About'); }} />
+        <CsvExport callback={() => setVisible(false)} />
+        <Button title="Schliessen" color="red" onPress={() => setVisible(false)} />
+      </SimpleMenu>
     </View >
   );
 };
