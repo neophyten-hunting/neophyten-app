@@ -120,6 +120,7 @@ namespace Backend
                 using (CsvWriter csv = new CsvWriter(writer, config))
                 {
                     csv.WriteHeader(typeof(NeophyteLocation));
+                    csv.NextRecord();
                     await csv.WriteRecordsAsync(neophyteLocations);
                 }
             }
