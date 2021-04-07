@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, View, TouchableOpacity, Text, StyleSheet, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { useForm } from 'react-hook-form';
 import TextForm from './TextForm';
@@ -7,6 +7,10 @@ import DropdownForm from './DropdownForm';
 
 const AddActivity = ({ isVisible, setIsVisible, onSubmit, isCreating }) => {
   const { control, handleSubmit, errors } = useForm();
+
+  useEffect(() => {
+    // wihtout this, the component will not re-render, probably better solution available
+  }, [errors])
 
   const renderFormComponent = () => {
     return workStepFrom.map((formComp, index) => {
