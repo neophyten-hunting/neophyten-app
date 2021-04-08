@@ -4,17 +4,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
 import { Context as LocationContext } from '../context/LocationContext';
+import { Context as UserContext } from '../context/UserContext';
 import useNeophytes from '../hooks/useNeophytes';
 import useLocation from '../hooks/useLocation';
 import Map from '../components/Map';
 import LocationError from '../components/LocationError';
 import SimpleMenu from '../components/SimpleMenu';
 import CsvExport from '../components/CsvExport';
+import AuthenticateUser from '../components/AuthenticateUser';
 
 const MainScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { state: { items, loading }, getItems } = useContext(NeophytesContext);
   const { state: userLocation, updateLocation, enableLocationTracking, setLocationTracker } = useContext(LocationContext);
+  const { state: user, login, logout } = useContext(UserContext);
   useNeophytes(items, getItems, userLocation);
   const [locationErr, resetErr] = useLocation(userLocation, updateLocation, enableLocationTracking, setLocationTracker);
   const mapRef = useRef(null);
@@ -43,6 +46,10 @@ const MainScreen = ({ navigation }) => {
       resetErr();
     }
   }, [locationErr]);
+
+  const loginComponents = user.auth == null
+    ? <AuthenticateUser login={login} />
+    : <Button title="Logout" onPress={() => { setVisible(false); logout(); }} />;
 
   let bottomBar = { ...styles.bottomBar };
   bottomBar.paddingBottom = insets.bottom * 0.5;
@@ -74,7 +81,7 @@ const MainScreen = ({ navigation }) => {
       </View>
       <SimpleMenu isVisible={visible} setIsVisible={setVisible} >
         <Button title="Über" onPress={() => { setVisible(false); navigation.navigate('About'); }} />
-        <Button title="Profil" onPress={() => { setVisible(false); navigation.navigate('User'); }} />
+        {loginComponents}
         <CsvExport callback={() => setVisible(false)} />
         <Button title="Schliessen" color="red" onPress={() => setVisible(false)} />
       </SimpleMenu>

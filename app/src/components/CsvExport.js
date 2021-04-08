@@ -34,7 +34,7 @@ const CsvExport = ({ callback }) => {
   return (
     <View>
       <ActivityIndicator style={styles.loadingStyle} size="large" color="green" animating={startExport} />
-      <Button disabled={startExport} onPress={() => setStartExport(true)} title="Als CSV exportieren" />
+      <Button disabled={startExport} onPress={() => setStartExport(true)} title="Daten als CSV exportieren" />
     </View>
   );
 }

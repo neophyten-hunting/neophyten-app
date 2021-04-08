@@ -18,6 +18,7 @@
     "assetBundlePatterns": [
       "assets/*.png"
     ],
+    "scheme": "msauth.ch.neophyten.app",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ch.neophyten.app",
