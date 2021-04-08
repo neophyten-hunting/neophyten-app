@@ -31,10 +31,14 @@ const getItems = dispatch => {
 };
 
 const addItem = dispatch => {
-  return async (item, callback) => {
+  return async (item, user, callback) => {
     try {
       dispatch({ type: 'update_creating', payload: true });
-      await backend.post('/v1/neophytes', item);
+      await backend.post('/v1/neophytes', item, {
+        headers: {
+          Authorization: 'Bearer ' + user.auth.params.access_token //the token is a variable which holds the token
+        }
+      });
 
       // ToDo: Update all
       if (callback) {

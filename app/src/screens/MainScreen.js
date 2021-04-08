@@ -33,6 +33,15 @@ const MainScreen = ({ navigation }) => {
     });
   };
 
+  const changeToCreateMode = () => {
+    if (user.auth === null || user.auth.type !== 'success') {
+      LocationError({ title: "Anmeldung notwendig", message: "Melde dich an um Neophyten-Standorte zu erstellen." });
+      return;
+    }
+
+    setIsCreateMode(true);
+  }
+
   useEffect(() => {
     const latlng = navigation.getParam('latlng');
     if (latlng) {
@@ -47,7 +56,7 @@ const MainScreen = ({ navigation }) => {
     }
   }, [locationErr]);
 
-  const loginComponents = user.auth == null
+  const loginComponents = user.auth === null || user.auth.type !== 'success'
     ? <AuthenticateUser login={login} />
     : <Button title="Logout" onPress={() => { setVisible(false); logout(); }} />;
 
@@ -72,7 +81,8 @@ const MainScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
           <Feather name='flag' style={styles.iconStyle} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setIsCreateMode(true)}>
+        <TouchableOpacity
+          onPress={() => changeToCreateMode()}>
           <Feather name='plus-circle' style={styles.iconStyle} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setVisible(!visible)}>

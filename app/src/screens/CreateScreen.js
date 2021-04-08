@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
+import { Context as UserContext } from '../context/UserContext';
 import TextForm from '../components/TextForm';
 import SwitchForm from '../components/SwitchForm';
 import createForm from '../config/createForm';
@@ -11,6 +12,7 @@ import createForm from '../config/createForm';
 const CreateScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { state: itemState, getItems, addItem, resetError } = useContext(NeophytesContext);
+  const { state: user } = useContext(UserContext);
   const [state, setState] = useState({ latitude: 0, longitude: 0 });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { control, handleSubmit, errors } = useForm();
@@ -21,7 +23,7 @@ const CreateScreen = ({ navigation }) => {
   }
 
   const add = async () => {
-    await addItem(state, () => navigation.navigate('Main'));
+    await addItem(state, user, () => navigation.navigate('Main'));
     await getItems();
   }
 
