@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Backend.Authentication;
 using Backend.Model;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -25,10 +26,12 @@ namespace Backend
     /// </summary>
     public class NephytenControllerFunctions
     {
+        private readonly ISecurityValidation security;
         private readonly IConfigurationRoot config;
 
-        public NephytenControllerFunctions(IConfigurationRoot config)
+        public NephytenControllerFunctions(ISecurityValidation security, IConfigurationRoot config)
         {
+            this.security = security;
             this.config = config;
         }
 
@@ -140,10 +143,10 @@ namespace Backend
             ILogger log)
         {
             log.LogInformation($"Validate token");
-            //if (await security.IsUserAuthorizedAsync(req.Headers.Authorization, new string[] { "Admin" }) == false)
-            //{
-            //    return new UnauthorizedResult();
-            //}
+            if (await security.IsUserAuthorizedAsync(req.Headers.Authorization, new string[] { "Worker" }) == false)
+            {
+                return new UnauthorizedResult();
+            }
 
             log.LogInformation($"Delete customer {id}");
 
@@ -186,10 +189,10 @@ namespace Backend
            ILogger log)
         {
             log.LogInformation($"Validate token");
-            //if (await security.IsUserAuthorizedAsync(req.Headers.Authorization, new string[] { "Admin" }) == false)
-            //{
-            //    return new UnauthorizedResult();
-            //}
+            if (await security.IsUserAuthorizedAsync(req.Headers.Authorization, new string[] { "Worker" }) == false)
+            {
+                return new UnauthorizedResult();
+            }
 
             log.LogInformation("Add new neophytes");
 

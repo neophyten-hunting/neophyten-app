@@ -4,7 +4,9 @@
       "commandName": "Project",
       "environmentVariables": {
         "cosmosDBName": "NeophytesHunting",
-        "cosmosDBCollection": "Neophytes"
+        "issuer": "",
+        "cosmosDBCollection": "Neophytes",
+        "audience": ""
       }
     }
   }

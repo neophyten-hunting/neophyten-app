@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using Backend.Authentication;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,7 @@ namespace Backend
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddSingleton((s) => { return LoadConfiguration(); });
+            builder.Services.AddSingleton<ISecurityValidation, SecurityValidation>();
         }
 
         private IConfigurationRoot LoadConfiguration()
