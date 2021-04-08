@@ -7,6 +7,9 @@ const SimpleMenu = ({ isVisible, setIsVisible, children }) => {
   if (Platform.OS === 'android') {
     renderReadyChild = children.map((c, i) => { return <View style={styles.androidButtonStyle}>{React.cloneElement(c, { key: i })}</View> });
   }
+  else if (Platform.OS === 'ios') {
+    renderReadyChild = children.map((c, i) => { return <View style={styles.iosSeperatorStyle}>{React.cloneElement(c, { key: i })}</View> });
+  }
 
   return (
     <View >
@@ -47,6 +50,10 @@ const styles = StyleSheet.create({
   },
   androidButtonStyle: {
     padding: 3,
+  },
+  iosSeperatorStyle: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'grey',
   }
 });
 
