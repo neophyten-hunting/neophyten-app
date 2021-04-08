@@ -80,9 +80,9 @@ const MainScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <SimpleMenu isVisible={visible} setIsVisible={setVisible} >
-        <Button title="Über" onPress={() => { setVisible(false); navigation.navigate('About'); }} />
         {loginComponents}
         <CsvExport callback={() => setVisible(false)} />
+        <Button title="Über" onPress={() => { setVisible(false); navigation.navigate('About'); }} />
         <Button title="Schliessen" color="red" onPress={() => setVisible(false)} />
       </SimpleMenu>
     </View >

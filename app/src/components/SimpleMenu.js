@@ -14,7 +14,7 @@ const SimpleMenu = ({ isVisible, setIsVisible, children }) => {
   return (
     <View >
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={isVisible}
         onRequestClose={() => {

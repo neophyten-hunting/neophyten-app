@@ -12,11 +12,12 @@ const AuthenticateUser = ({ login }) => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: 'fa0e3034-49e2-49da-aa70-0b2f4c6d5bb9',
-      scopes: ['openid', 'profile', 'email', 'offline_access'],
+      scopes: ['https://buelachapp.onmicrosoft.com/fa0e3034-49e2-49da-aa70-0b2f4c6d5bb9/User'],
       redirectUri: makeRedirectUri({
         // For usage in bare and standalone
         native: 'msauth.ch.neophyten.app://auth',
       }),
+      responseType: 'token',
     },
     discovery
   );
@@ -26,6 +27,10 @@ const AuthenticateUser = ({ login }) => {
       login(response);
     }
   }, [response]);
+
+  console.log(discovery)
+  console.log(request)
+  console.log(response)
 
   return (
     <Button
