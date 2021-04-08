@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal, View, TouchableOpacity, Button, Text, StyleSheet, Platform } from 'react-native';
-import CsvExport from './CsvExport';
+import { Modal, View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 
 const SimpleMenu = ({ isVisible, setIsVisible, children }) => {
 
@@ -9,7 +8,6 @@ const SimpleMenu = ({ isVisible, setIsVisible, children }) => {
     renderReadyChild = children.map((c, i) => { return <View style={styles.androidButtonStyle}>{React.cloneElement(c, { key: i })}</View> });
   }
 
-  console.log(renderReadyChild)
   return (
     <View >
       <Modal

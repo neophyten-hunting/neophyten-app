@@ -10,6 +10,7 @@ import CreateScreen from './src/screens/CreateScreen';
 import MainScreen from './src/screens/MainScreen';
 import DetailScreen from './src/screens/DetailScreen';
 import ActivityScreen from './src/screens/ActivityScreen';
+import NotificationScreen from './src/screens/NotificationScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import ErrorBoundary from './src/components/ErrorBoundary';
 
@@ -18,6 +19,7 @@ const navigator = createStackNavigator({
   Create: { screen: CreateScreen, navigationOptions: { title: 'Standort melden', headerShown: true } },
   Detail: { screen: DetailScreen, navigationOptions: { title: 'Detailansicht', headerShown: true, } },
   Activity: { screen: ActivityScreen, navigationOptions: { title: 'Aktivitäten', headerShown: true } },
+  Notification: { screen: NotificationScreen, navigationOptions: { title: 'Letze Änderungen', headerShown: true } },
   About: { screen: AboutScreen, navigationOptions: { title: 'About', headerShown: true } },
 }, {
   initialRouteName: 'Main',

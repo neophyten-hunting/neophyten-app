@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Button, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
@@ -62,8 +62,8 @@ const MainScreen = ({ navigation }) => {
         setIsCreateMode={setIsCreateMode}
       />
       <View style={bottomBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('User')}>
-          <Feather name='user' style={styles.iconStyle} />
+        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+          <Feather name='flag' style={styles.iconStyle} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setIsCreateMode(true)}>
           <Feather name='plus-circle' style={styles.iconStyle} />
@@ -74,6 +74,7 @@ const MainScreen = ({ navigation }) => {
       </View>
       <SimpleMenu isVisible={visible} setIsVisible={setVisible} >
         <Button title="Über" onPress={() => { setVisible(false); navigation.navigate('About'); }} />
+        <Button title="Profil" onPress={() => { setVisible(false); navigation.navigate('User'); }} />
         <CsvExport callback={() => setVisible(false)} />
         <Button title="Schliessen" color="red" onPress={() => setVisible(false)} />
       </SimpleMenu>
