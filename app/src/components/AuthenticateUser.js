@@ -28,10 +28,6 @@ const AuthenticateUser = ({ login }) => {
     }
   }, [response]);
 
-  console.log(discovery)
-  console.log(request)
-  console.log(response)
-
   return (
     <Button
       disabled={!request}
@@ -42,6 +38,5 @@ const AuthenticateUser = ({ login }) => {
     />
   );
 }
-
 
 export default AuthenticateUser;
