@@ -66,7 +66,7 @@ const DetailScreen = ({ navigation }) => {
           onPress={() => { navigation.navigate('Main', { latlng: { latitude: item.latitude, longitude: item.longitude } }) }}
         >
           <UrlTile
-            urlTemplate='http://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            urlTemplate='https://tile.osm.ch/osm-swiss-style/{z}/{x}/{y}.png'
             maximumZ={19}
             flipY={false}
           />

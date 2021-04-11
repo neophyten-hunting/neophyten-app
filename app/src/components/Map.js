@@ -95,7 +95,7 @@ const Map = ({ initCoords, mapRef, items, itemsLoading, isCreateMode, setIsCreat
   }
 
   const tileOverlay = isTileOverlayActive ? <UrlTile
-    urlTemplate='http://c.tile.openstreetmap.org/{z}/{x}/{y}.png' // alt: 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg'
+    urlTemplate='https://tile.osm.ch/osm-swiss-style/{z}/{x}/{y}.png'
     maximumZ={19}
     flipY={false}
   /> : null;
