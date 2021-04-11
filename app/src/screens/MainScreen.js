@@ -2,6 +2,7 @@ import React, { useRef, useContext, useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, Button, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
 import { Context as LocationContext } from '../context/LocationContext';
 import { Context as UserContext } from '../context/UserContext';
@@ -11,7 +12,7 @@ import Map from '../components/Map';
 import LocationError from '../components/LocationError';
 import SimpleMenu from '../components/SimpleMenu';
 import CsvExport from '../components/CsvExport';
-import AuthenticateUser from '../components/AuthenticateUser';
+import AuthenticateUserB2C from '../components/AuthenticateUserB2C';
 
 const MainScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -57,7 +58,13 @@ const MainScreen = ({ navigation }) => {
   }, [locationErr]);
 
   const loginComponents = user.auth === null || user.auth.type !== 'success'
-    ? <AuthenticateUser login={login} />
+    ? <AuthenticateUserB2C
+      login={login}
+      tenantId={Constants.manifest.extra.b2cTenantId}
+      clientId={Constants.manifest.extra.b2cClientId}
+      scope={Constants.manifest.extra.b2cScope}
+      iosRedirect={Constants.manifest.extra.b2cIosRedirect}
+      androidRedirect={Constants.manifest.extra.b2cAndroidRedirect} />
     : <Button title="Logout" onPress={() => { setVisible(false); logout(); }} />;
 
   let bottomBar = { ...styles.bottomBar };

@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest, useAutoDiscovery } from 'expo-auth-session';
-import { Button } from 'react-native';
+import { Button, Platform } from 'react-native';
 
 WebBrowser.maybeCompleteAuthSession();
 
-const AuthenticateUser = ({ login }) => {
+const AuthenticateUserB2C = ({ login, tenantId, clientId, scope, iosRedirect, androidRedirect }) => {
   // Endpoint
-  const discovery = useAutoDiscovery('https://login.microsoftonline.com/17a8b964-0247-444e-b254-3207da0363e3/v2.0');
+  const discovery = useAutoDiscovery(`https://login.microsoftonline.com/${tenantId}/v2.0`);
   // Request
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: 'fa0e3034-49e2-49da-aa70-0b2f4c6d5bb9',
-      scopes: ['https://buelachapp.onmicrosoft.com/fa0e3034-49e2-49da-aa70-0b2f4c6d5bb9/User'],
+      clientId: clientId,
+      scopes: [scope],
       redirectUri: makeRedirectUri({
         // For usage in bare and standalone
-        native: 'msauth.ch.neophyten.app://auth',
+        native: Platform.OS === 'android' ? androidRedirect : iosRedirect, // probably ios works also on mac
       }),
       responseType: 'token',
     },
@@ -39,4 +39,4 @@ const AuthenticateUser = ({ login }) => {
   );
 }
 
-export default AuthenticateUser;
+export default AuthenticateUserB2C;
