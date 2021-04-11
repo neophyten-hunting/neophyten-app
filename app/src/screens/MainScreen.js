@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
 import { Context as LocationContext } from '../context/LocationContext';
 import { Context as UserContext } from '../context/UserContext';
+import { Context as NotificationContext } from '../context/NotificationContext';
 import useNeophytes from '../hooks/useNeophytes';
 import useLocation from '../hooks/useLocation';
 import Map from '../components/Map';
@@ -13,13 +14,16 @@ import LocationError from '../components/LocationError';
 import SimpleMenu from '../components/SimpleMenu';
 import CsvExport from '../components/CsvExport';
 import AuthenticateUserB2C from '../components/AuthenticateUserB2C';
+import useNotifications from '../hooks/useNotifications';
 
 const MainScreen = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { state: { items, loading }, getItems } = useContext(NeophytesContext);
   const { state: userLocation, updateLocation, enableLocationTracking, setLocationTracker } = useContext(LocationContext);
   const { state: user, login, logout } = useContext(UserContext);
+  const { state: notification, saveLatestNotificationDate, loadLatestNotificationDate } = useContext(NotificationContext);
   useNeophytes(items, getItems, userLocation);
+  const [notifications] = useNotifications(items, notification, loadLatestNotificationDate);
   const [locationErr, resetErr] = useLocation(userLocation, updateLocation, enableLocationTracking, setLocationTracker);
   const mapRef = useRef(null);
   const [isCreateMode, setIsCreateMode] = useState(false);
@@ -86,7 +90,9 @@ const MainScreen = ({ navigation }) => {
       />
       <View style={bottomBar}>
         <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-          <Feather name='flag' style={styles.iconStyle} />
+          <Feather
+            name='flag'
+            style={notifications.length > 0 ? { ...styles.iconStyle, ...styles.notificationIconStyle } : styles.iconStyle} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => changeToCreateMode()}>
@@ -128,6 +134,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 32,
     color: 'white'
+  },
+  notificationIconStyle: {
+    color: '#f4943a'
   }
 });
 

@@ -3,16 +3,18 @@ import { View, FlatList, Button, Image, Text, Linking, StyleSheet } from 'react-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment/min/moment-with-locales';
 import { Context as NeophytesContext } from '../context/NeophytesContext';
-import Item from '../components/Item';
+import { Context as NotificationContext } from '../context/NotificationContext';
 import useNotifications from '../hooks/useNotifications';
+import Item from '../components/Item';
 
 const NotificationScreen = ({ navigation }) => {
   const { state: { items } } = useContext(NeophytesContext);
-  const [notifications, latestNotificationDate, setLatestNotificationDate] = useNotifications(items);
+  const { state: notification, saveLatestNotificationDate, loadLatestNotificationDate } = useContext(NotificationContext);
+  const [notifications] = useNotifications(items, notification, loadLatestNotificationDate);
 
   return (
     <View style={styles.containerStyle}>
-      <Text style={styles.textStyle}>Änderungen ab: {moment(latestNotificationDate).format('LLL')}</Text>
+      <Text style={styles.textStyle}>Änderungen ab: {moment(notification.latestNotificationDate).format('LLL')}</Text>
       <FlatList
         data={notifications}
         keyExtractor={(i) => i.id.toString()}
@@ -24,7 +26,7 @@ const NotificationScreen = ({ navigation }) => {
           );
         }}
       />
-      <Button title="Als gelesen markieren" onPress={() => setLatestNotificationDate(moment())} />
+      <Button title="Als gelesen markieren" onPress={() => saveLatestNotificationDate(moment())} />
     </View>
   );
 }

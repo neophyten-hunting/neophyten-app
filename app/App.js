@@ -7,6 +7,7 @@ import moment from 'moment/min/moment-with-locales';
 import { Provider as NeophytesProvider } from './src/context/NeophytesContext';
 import { Provider as LocationProvider } from './src/context/LocationContext';
 import { Provider as UserProvider } from './src/context/UserContext';
+import { Provider as NotificationProvider } from './src/context/NotificationContext';
 import CreateScreen from './src/screens/CreateScreen';
 import MainScreen from './src/screens/MainScreen';
 import DetailScreen from './src/screens/DetailScreen';
@@ -39,12 +40,14 @@ export default () => {
     <NeophytesProvider>
       <LocationProvider>
         <UserProvider>
-          <SafeAreaProvider>
-            <StatusBar backgroundColor='rgba(255, 255, 255, 0)' barStyle={'dark-content'} />
-            <ErrorBoundary>
-              <App />
-            </ErrorBoundary>
-          </SafeAreaProvider>
+          <NotificationProvider>
+            <SafeAreaProvider>
+              <StatusBar backgroundColor='rgba(255, 255, 255, 0)' barStyle={'dark-content'} />
+              <ErrorBoundary>
+                <App />
+              </ErrorBoundary>
+            </SafeAreaProvider>
+          </NotificationProvider>
         </UserProvider>
       </LocationProvider>
     </NeophytesProvider>
