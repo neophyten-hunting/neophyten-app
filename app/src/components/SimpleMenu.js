@@ -3,12 +3,12 @@ import { Modal, View, TouchableOpacity, StyleSheet, Platform } from 'react-nativ
 
 const SimpleMenu = ({ isVisible, setIsVisible, children }) => {
 
-  let renderReadyChild = children;
+  let renderReadyChild = null;
   if (Platform.OS === 'android') {
-    renderReadyChild = children.map((c, i) => { return <View style={styles.androidButtonStyle}>{React.cloneElement(c, { key: i })}</View> });
+    renderReadyChild = children.map((c, i) => { return <View key={i} style={styles.androidButtonStyle}>{React.cloneElement(c, { key: i })}</View> });
   }
   else if (Platform.OS === 'ios') {
-    renderReadyChild = children.map((c, i) => { return <View style={styles.iosSeperatorStyle}>{React.cloneElement(c, { key: i })}</View> });
+    renderReadyChild = children.map((c, i) => { return <View key={i} style={styles.iosSeperatorStyle}>{React.cloneElement(c, { key: i })}</View> });
   }
 
   return (

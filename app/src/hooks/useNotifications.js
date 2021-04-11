@@ -5,7 +5,6 @@ export default (items, notification, loadLatestNotificationDate) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    console.log('load latestDate')
     loadLatestNotificationDate();
   }, [])
 
