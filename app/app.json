@@ -21,14 +21,14 @@
     "scheme": "msauth.ch.neophyten.app",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ch.neophyten.app",
+      "bundleIdentifier": "ch.neophyten.app.test",
       "buildNumber": "0.1.0",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Diese App benötigt die Standortdaten deines Gerätes um Neophyten zu erfassen."
       }
     },
     "android": {
-      "package": "ch.neophyten.app",
+      "package": "ch.neophyten.app.test",
       "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
