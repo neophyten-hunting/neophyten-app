@@ -21,7 +21,7 @@ Systemanforderungen App (React Native):
 
 Starten der Entwicklungsumgebung (App/React Native)
 * Installieren der expo-cli: `npm install expo-cli -g` (installiert expo global auf deinem Gerät)
-* .env-File mit nötigen Environment-Variablen defikarte-Verzeichnis anlegen
+* .env-File mit nötigen Environment-Variablen app-Verzeichnis anlegen
 * Zuerst `npm install` und danach `npm start` ausführen
 * Scanne den QR-Code auf der neu geöffneten Website mit deinem Smartphone / Tablet
 * Öffne den Link mit der Expo-App
